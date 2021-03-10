@@ -1,1 +1,0 @@
-# scandiweb-carousel
