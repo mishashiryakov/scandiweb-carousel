@@ -71,10 +71,7 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
-  entry: {
-    main: ['@babel/polyfill', './index.jsx'],
-    analytics: './analytics.js'
-  },
+  entry: ['@babel/polyfill', './index.jsx'],
   output: {
     filename: '[name].[contenthash].js',
     path: path.resolve(__dirname, 'dist')
@@ -87,6 +84,7 @@ module.exports = {
     port: 4200,
     open: true,
     hot: isDev
+    // liveReload: false
   },
   plugins: plugins(),
   module: {

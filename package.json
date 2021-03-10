@@ -6,13 +6,13 @@
   "scripts": {
     "dev": "cross-env NODE_END=development webpack --mode development",
     "build": "cross-env NODE_END=production webpack --mode production",
-    "start": "cross-env NODE_END=development webpack serve --mode development"
+    "start": "webpack-cli serve --mode development"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mishashiryakov/scandiweb-carousel.git"
   },
-  "browserslist": "> 0.25%, not dead",
+  
   "keywords": [
     "carousel",
     "webpack",
