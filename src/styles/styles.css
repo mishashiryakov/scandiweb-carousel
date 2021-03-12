@@ -1,19 +1,96 @@
 @import "~normalize.css";
 @import "roboto.css";
-@import "./components/slider.css";
 
 body {
   font-family: 'Roboto', sans-serif;
+  height: 100%;
+  color: #333;
+  text-align: center;
+  letter-spacing: 0.15em;
+  font-size: 22px;
 }
 
 .container {
-  padding-top: 2rem;
   max-width: 1000px;
   margin: 0 auto;
-  background-color: rgba(47, 0, 255, 0.288);
 }
 
-h1 {
-  text-align: center;
+
+* { box-sizing: border-box; }
+
+
+.carousel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 300px;
+  box-shadow: 3px 3px 10px rgba(0,0,0,.2);
 }
 
+.wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 400px;
+  height: 300px;
+  z-index: 1;
+}
+
+.slidesContainer {
+  display: flex;
+  position: relative;
+  top: 0;
+  left: -400px;
+  width: 10000px;
+}
+
+.moving {
+  transition: left .1s ease-out;
+}
+
+.slide {
+  width: 400px;
+  height: 300px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 1s;
+  position: relative;
+  background: #1609cc;
+  border-radius: 2px;
+}
+
+.control {
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  background: #fff;
+  border-radius: 50px;
+  margin-top: -20px;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+	border: none;
+	outline: none;
+  background-size: 22px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.prevButton {
+  background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
+  left: -20px;
+}
+
+.nextButton {
+  background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
+  right: -20px;
+}
+
+.prevButton:active,
+.nextButton:active {
+  transform: scale(.8);
+}

@@ -1,15 +1,22 @@
+import './styles/styles.css';
+import React, { useState } from 'react';
+import { render } from 'react-dom';
+import images from './data';
 
-import './styles/styles.css'
-import React from 'react'
-import { render } from 'react-dom'
-
-import Slider from './components/Slider.jsx'
+import Carousel from './components/Carousel.jsx'
 
 const App = () => {
 
+  const [thresholdWidth, setThresholdWidth] = useState(0.5);
+  const [thresholdTime, setThresholdTime] = useState(300)
+
   return (
     <div className="container">
-      <Slider />
+      <Carousel 
+        images={images} 
+        thresholdWidth={thresholdWidth}
+        thresholdTime={thresholdTime} 
+      />
     </div>
   )
 }

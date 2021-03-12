@@ -12,7 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/mishashiryakov/scandiweb-carousel.git"
   },
-  
   "keywords": [
     "carousel",
     "webpack",
