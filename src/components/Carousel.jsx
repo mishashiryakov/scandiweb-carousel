@@ -13,7 +13,7 @@ const Carousel = ({ images, thresholdWidth, thresholdTime }) => {
   const distanceOfDrag = useRef(0);
   const slideWidth = useRef();
   const timeInterval = useRef(true);
-  const timerForDrag = useRef()
+  const timerForDrag = useRef();
 
 
   useEffect(() => {
@@ -29,30 +29,32 @@ const Carousel = ({ images, thresholdWidth, thresholdTime }) => {
     slidesContainer.current.addEventListener('touchstart', dragStart);
     slidesContainer.current.addEventListener('touchend', dragEnd);
     slidesContainer.current.addEventListener('touchmove', dragAction);    
+    document.querySelector('.nav-dot').classList.add('active-dot')
   }, [])
+
 
   const moveSlide = (direction, isDragged) => {
     if (isMoving.current) { return }
 
     if (!isDragged) { 
-      initialPosition.current = slidesContainer.current.offsetLeft 
+      initialPosition.current = slidesContainer.current.offsetLeft;
     }
 
     if (direction > 0) {
       slidesContainer.current.style.left = (initialPosition.current - direction * slideWidth.current) + "px";
-      index.current += direction;
     } else if (direction < 0) {
       slidesContainer.current.style.left = (initialPosition.current + Math.abs(direction) * slideWidth.current) + "px";
-      index.current--;  
     }
-    
+
+    index.current += direction;  
     isMoving.current = true;
   }
 
   const dragStart = (event) => {
+    if (isMoving.current) { return }
     timerForDrag.current = setTimeout(() => {
-      console.log('НЕ УСПЕЛ')
       return timeInterval.current = false}, thresholdTime)
+      
     slidesContainer.current.classList.remove('moving');
 
     event = event || window.event;
@@ -66,9 +68,11 @@ const Carousel = ({ images, thresholdWidth, thresholdTime }) => {
       document.onmouseup = dragEnd;
       document.onmousemove = dragAction;
     }
+
   }
   
   const dragAction = (event) => {
+    if (isMoving.current) { return }
     event = event || window.event;
     event.preventDefault();
     
@@ -84,62 +88,62 @@ const Carousel = ({ images, thresholdWidth, thresholdTime }) => {
   }
     
   const dragEnd = () => {
+    if (isMoving.current) { return }
+
     finalPosition.current = slidesContainer.current.offsetLeft;
-
     let quantityOfSkippedSlides = Math.round((initialPosition.current - finalPosition.current) / slideWidth.current);
-    if (timeInterval.current) {
-      if (finalPosition.current < initialPosition.current) {
-        moveSlide(1, true);
-      } else if (finalPosition.current > initialPosition.current) {
-        moveSlide(-1, true);
-      } 
-
-      clearTimeout(timerForDrag.current);
-      timeInterval.current = true;
-
-      document.onmouseup = null;
-      document.onmousemove = null;
-      slidesContainer.current.classList.add('moving');
-      return;
-    } 
+    const dragOffset = finalPosition.current - initialPosition.current;
+    
     clearTimeout(timerForDrag.current);
-    timeInterval.current = true;
-    slidesContainer.current.style.left = (initialPosition.current) + "px";
-    console.log('не попал сюда')
-    if (finalPosition.current - initialPosition.current < -(thresholdWidth * slideWidth.current)) {
-      moveSlide(quantityOfSkippedSlides, true);
-    } else if (finalPosition.current - initialPosition.current > thresholdWidth * slideWidth.current) {
-      moveSlide(quantityOfSkippedSlides, true);
+    
+    if (timeInterval.current) {
+      (dragOffset < 0) && moveSlide(1, true);
+      (dragOffset > 0) && moveSlide(-1, true);
     } else {
-      slidesContainer.current.style.left = (initialPosition.current) + "px";
-    }
+      const shouldMove = Math.abs(dragOffset) > (thresholdWidth * slideWidth.current);
 
+      shouldMove 
+        ? moveSlide(quantityOfSkippedSlides, true)
+        : slidesContainer.current.style.left = (initialPosition.current) + "px";
+    }
+    
+    
+    timeInterval.current = true;
     document.onmouseup = null;
     document.onmousemove = null;
     slidesContainer.current.classList.add('moving');
+    isMoving.current = false;
 
   }
 
   const checkCurrentSlideIndex = () => {
-
-    if (index.current === -1) {
-      slidesContainer.current.classList.remove('moving');
-      slidesContainer.current.style.left = -(images.length * slideWidth.current) + "px";
-      index.current = images.length - 1;
-      setTimeout(() => slidesContainer.current.classList.add('moving'), 1)
-    }
-
-    if (index.current === images.length) {
-      slidesContainer.current.classList.remove('moving');
-      slidesContainer.current.style.left = -(1 * slideWidth.current) + "px";
-      index.current = 0;
-      setTimeout(() => slidesContainer.current.classList.add('moving'), 1)
-    }
     
+
+    if (index.current < 0 || index.current === images.length) {
+      isMoving.current = true;
+      slidesContainer.current.classList.remove('moving');
+      (index.current < 0) && (slidesContainer.current.style.left = -(slideWidth.current * (images.length + 1 - Math.abs(index.current))) + "px");
+      (index.current === images.length) && (slidesContainer.current.style.left = -(1 * slideWidth.current) + "px");
+      
+      index.current < 0
+      ? index.current = images.length - Math.abs(index.current) 
+      : index.current = 0;
+      setTimeout(() => slidesContainer.current.classList.add('moving'), 1)
+    }
+
+    document.querySelectorAll('.nav-dot').forEach(el => el.classList.remove('active-dot'))
+    document.getElementById(`${index.current}-dot`).classList.add('active-dot')
+
     isMoving.current = false;
   }
 
+  const calcDirectionForDots = (indexOfClickedDot) => {
+    const indexOfActiveDot = Number(document.querySelector('.active-dot').id[0]);
+    return indexOfClickedDot - indexOfActiveDot;
+  }
+
   return (
+    <>
       <div className="carousel">
         <div className="wrapper">
           <div 
@@ -155,7 +159,20 @@ const Carousel = ({ images, thresholdWidth, thresholdTime }) => {
         </div>
         <button className="control prevButton" onClick={moveSlide.bind(null, -1, false)}></button>
         <button className="control nextButton" onClick={moveSlide.bind(null, 1, false)}></button>
+        <div className="dots">
+          {images.map((el, index) => (
+            <span
+              className="nav-dot" 
+              key={index}
+              id={`${index}-dot`}
+              onClick={() => moveSlide(calcDirectionForDots(index), false)}
+            >
+            </span>
+          ))}
+        </div>
       </div>
+      
+    </>
   )
 }
 

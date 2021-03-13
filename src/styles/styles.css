@@ -12,6 +12,10 @@ body {
 
 .container {
   max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
 }
 
@@ -20,38 +24,36 @@ body {
 
 
 .carousel {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 300px;
+  position: relative;
+  width: 600px;
+  height: 500px;
   box-shadow: 3px 3px 10px rgba(0,0,0,.2);
 }
 
 .wrapper {
   overflow: hidden;
   position: relative;
-  width: 400px;
-  height: 300px;
+  width: 600px;
+  height: 500px;
   z-index: 1;
+  margin-bottom: 20px;
 }
 
 .slidesContainer {
   display: flex;
   position: relative;
   top: 0;
-  left: -400px;
+  left: -600px;
   width: 10000px;
 }
 
 .moving {
-  transition: left .1s ease-out;
+  transition: left .2s ease-out;
 }
 
 .slide {
-  width: 400px;
-  height: 300px;
+  width: 600px;
+  height: 500px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -67,11 +69,10 @@ body {
   top: 50%;
   width: 50px;
   height: 50px;
-  background: #fff;
   border-radius: 50px;
   margin-top: -20px;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
   z-index: 2;
+  background: none;
 	border: none;
 	outline: none;
   background-size: 22px;
@@ -80,17 +81,46 @@ body {
   cursor: pointer;
 }
 
+.control:hover {
+  background-color: rgba(136, 135, 143, 0.144);
+
+}
+
 .prevButton {
-  background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronLeft-512.png);
-  left: -20px;
+  background-image: url('../assets/icons/prev.png');
+  left: -55px;
 }
 
 .nextButton {
-  background-image: url(https://cdn0.iconfinder.com/data/icons/navigation-set-arrows-part-one/32/ChevronRight-512.png);
-  right: -20px;
+  background-image: url('../assets/icons/next.png');
+  right: -55px;
 }
 
-.prevButton:active,
-.nextButton:active {
-  transform: scale(.8);
+
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-dot {
+  top: -5px;
+  width: 11px;
+  height: 11px;
+  margin: 0 5px;
+  position: relative;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: rgba(131, 114, 114, 0.6);
+}
+
+.nav-dot:hover {
+  cursor: pointer;
+  background-color: rgba(27, 13, 226, 0.486);
+
+}
+
+.active-dot {
+  background-color: rgba(34, 21, 218, 0.836);
+
 }

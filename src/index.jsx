@@ -12,6 +12,12 @@ const App = () => {
 
   return (
     <div className="container">
+
+      <header>
+        <h3>Test task "Scandiweb" for Scandiweb</h3>
+        <h4>By Michael Shiryakov</h4>
+      </header>
+
       <Carousel 
         images={images} 
         thresholdWidth={thresholdWidth}
