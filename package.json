@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_END=development webpack --mode development",
     "build": "cross-env NODE_END=production webpack --mode production",
-    "start": "webpack-cli serve --mode development"
+    "start": "cross-env NODE_END=development webpack-cli serve --mode development"
   },
   "repository": {
     "type": "git",

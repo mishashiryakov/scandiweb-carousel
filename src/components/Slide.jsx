@@ -10,7 +10,7 @@ const Slide = ({ image }) => {
 
     return (
       <>
-          <div className="slide" style={styles}></div>
+        <div className="slide" style={styles}></div>
       </>
     )
 }

@@ -84,7 +84,6 @@ module.exports = {
     port: 4200,
     open: true,
     hot: isDev
-    // liveReload: false
   },
   plugins: plugins(),
   module: {

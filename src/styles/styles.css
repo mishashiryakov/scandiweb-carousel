@@ -26,15 +26,15 @@ body {
 .carousel {
   position: relative;
   width: 600px;
-  height: 500px;
-  box-shadow: 3px 3px 10px rgba(0,0,0,.2);
+  height: 400px;
+  box-shadow: 5px 5px 12px rgba(0,0,0,.2);
 }
 
 .wrapper {
   overflow: hidden;
   position: relative;
   width: 600px;
-  height: 500px;
+  height: 400px;
   z-index: 1;
   margin-bottom: 20px;
 }
@@ -48,19 +48,19 @@ body {
 }
 
 .moving {
-  transition: left .2s ease-out;
+  transition: left .1s ease-out;
 }
 
 .slide {
   width: 600px;
-  height: 500px;
+  height: 400px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
   transition: all 1s;
   position: relative;
-  background: #1609cc;
+  background: #57575a3f;
   border-radius: 2px;
 }
 
@@ -82,7 +82,7 @@ body {
 }
 
 .control:hover {
-  background-color: rgba(136, 135, 143, 0.144);
+  background-color: rgba(170, 169, 172, 0.281);
 
 }
 
@@ -123,4 +123,60 @@ body {
 .active-dot {
   background-color: rgba(34, 21, 218, 0.836);
 
+}
+
+
+@media (max-width: 1300px) {
+  .carousel {
+    width: 500px;
+    height: 300px;
+  }
+  
+  .wrapper {
+    width: 500px;
+    height: 300px;
+  }
+
+  .slidesContainer {
+    left: -500px;
+  }
+  .slide {
+    width: 500px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 600px) {
+  .control {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+
+  header {
+    padding: 0 20px;
+  }
+
+  .dots {
+    justify-content: space-around;
+  }
+
+  .carousel {
+    width: 100vw;
+    height: 300px;
+  }
+  
+  .wrapper {
+    width: 100vw;
+    height: 300px;
+  }
+
+  .slidesContainer {
+    left: -100vw;
+  }
+  .slide {
+    width: 100vw;
+    height: 300px;
+  }
 }

@@ -8,7 +8,7 @@ import Carousel from './components/Carousel.jsx'
 const App = () => {
 
   const [thresholdWidth, setThresholdWidth] = useState(0.5);
-  const [thresholdTime, setThresholdTime] = useState(300)
+  const [thresholdTime, setThresholdTime] = useState(300);
 
   return (
     <div className="container">
@@ -21,7 +21,7 @@ const App = () => {
       <Carousel 
         images={images} 
         thresholdWidth={thresholdWidth}
-        thresholdTime={thresholdTime} 
+        thresholdTime={thresholdTime}
       />
     </div>
   )
