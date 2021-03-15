@@ -1,11 +1,11 @@
 # scandiweb-carousel test task
 ## Installation and setup
-1. Fork this repository.
+1. Clone this repository.
 2. Checkout in develop branch (git checkout develop).
 3. npm i.
 4. To start dev server use - npm start.
 5. For dev build use - npm run dev.
-6. For prod build use - npm run prod.
+6. For prod build use - npm run build.
 
 ### Deploy - https://scandiweb-carousel-ms.netlify.app
 
