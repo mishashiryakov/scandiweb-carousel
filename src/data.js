@@ -5,7 +5,6 @@ import mac from './assets/imgs/mac1.jpg';
 import market from './assets/imgs/market.jpg';
 import ocean from './assets/imgs/ocean.jpg';
 
+const images = [city, coffee, forest, mac, market, ocean];
 
-const images = [city, coffee, forest, mac, market, ocean]
-
-export default images
+export default images;

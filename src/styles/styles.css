@@ -1,6 +1,8 @@
 @import "~normalize.css";
 @import "roboto.css";
 
+* { box-sizing: border-box; }
+
 body {
   font-family: 'Roboto', sans-serif;
   height: 100%;
@@ -18,10 +20,6 @@ body {
   align-items: center;
   margin: 0 auto;
 }
-
-
-* { box-sizing: border-box; }
-
 
 .carousel {
   position: relative;
@@ -83,7 +81,6 @@ body {
 
 .control:hover {
   background-color: rgba(170, 169, 172, 0.281);
-
 }
 
 .prevButton {
@@ -95,7 +92,6 @@ body {
   background-image: url('../assets/icons/next.png');
   right: -55px;
 }
-
 
 .dots {
   display: flex;
@@ -116,15 +112,12 @@ body {
 
 .nav-dot:hover {
   cursor: pointer;
-  background-color: rgba(27, 13, 226, 0.486);
-
 }
 
 .active-dot {
   background-color: rgba(34, 21, 218, 0.836);
 
 }
-
 
 @media (max-width: 1300px) {
   .carousel {
@@ -149,6 +142,10 @@ body {
 @media (max-width: 600px) {
   .control {
     display: none;
+  }
+
+  .nav-dot:hover {
+    cursor: default;
   }
 }
 
