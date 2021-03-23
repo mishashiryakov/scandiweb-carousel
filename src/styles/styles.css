@@ -1,0 +1,179 @@
+@import "~normalize.css";
+@import "roboto.css";
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  height: 100%;
+  color: #333;
+  text-align: center;
+  letter-spacing: 0.15em;
+  font-size: 22px;
+}
+
+.container {
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.carousel {
+  position: relative;
+  width: 600px;
+  height: 400px;
+  box-shadow: 5px 5px 12px rgba(0,0,0,.2);
+}
+
+.wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 600px;
+  height: 400px;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+
+.slidesContainer {
+  display: flex;
+  position: relative;
+  top: 0;
+  left: -600px;
+  width: 10000px;
+}
+
+.moving {
+  transition: left .1s ease-out;
+}
+
+.slide {
+  width: 600px;
+  height: 400px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 1s;
+  position: relative;
+  background: #57575a3f;
+  border-radius: 2px;
+}
+
+.control {
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-top: -20px;
+  z-index: 2;
+  background: none;
+	border: none;
+	outline: none;
+  background-size: 22px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.control:hover {
+  background-color: rgba(170, 169, 172, 0.281);
+}
+
+.prevButton {
+  background-image: url('../assets/icons/prev.png');
+  left: -55px;
+}
+
+.nextButton {
+  background-image: url('../assets/icons/next.png');
+  right: -55px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-dot {
+  top: -5px;
+  width: 11px;
+  height: 11px;
+  margin: 0 5px;
+  position: relative;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: rgba(131, 114, 114, 0.6);
+}
+
+.nav-dot:hover {
+  cursor: pointer;
+}
+
+.active-dot {
+  background-color: rgba(34, 21, 218, 0.836);
+
+}
+
+@media (max-width: 1300px) {
+  .carousel {
+    width: 500px;
+    height: 300px;
+  }
+  
+  .wrapper {
+    width: 500px;
+    height: 300px;
+  }
+
+  .slidesContainer {
+    left: -500px;
+  }
+  .slide {
+    width: 500px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 600px) {
+  .control {
+    display: none;
+  }
+
+  .nav-dot:hover {
+    cursor: default;
+  }
+}
+
+@media (max-width: 500px) {
+
+  header {
+    padding: 0 20px;
+  }
+
+  .dots {
+    justify-content: space-around;
+  }
+
+  .carousel {
+    width: 100vw;
+    height: 300px;
+  }
+  
+  .wrapper {
+    width: 100vw;
+    height: 300px;
+  }
+
+  .slidesContainer {
+    left: -100vw;
+  }
+  .slide {
+    width: 100vw;
+    height: 300px;
+  }
+}
