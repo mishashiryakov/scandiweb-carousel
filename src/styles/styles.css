@@ -56,10 +56,16 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: all 1s;
   position: relative;
-  background: #57575a3f;
+  background: rgb(0, 0, 0);
   border-radius: 2px;
+}
+
+.slide span {
+  user-select: none;
+  font-size: 0.7em;
+  padding: 10px 20px;
+  color: white
 }
 
 .control {
@@ -172,8 +178,13 @@ body {
   .slidesContainer {
     left: -100vw;
   }
+
   .slide {
     width: 100vw;
     height: 300px;
+  }
+
+  .slide span {
+    font-size: 0.6em;
   }
 }

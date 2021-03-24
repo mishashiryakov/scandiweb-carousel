@@ -5,7 +5,7 @@ const NAV_DOT_CLASSNAME = '.nav-dot';
 const ACTIVE_DOT_CLASSNAME = 'active-dot';
 const MOVING_CLASSNAME = 'moving';
 
-const Carousel = ({ images = [], thresholdWidth = 0.5, thresholdTime = 300 }) => {
+const Carousel = ({ data = [], thresholdWidth = 0.5, thresholdTime = 300 }) => {
 
   const slidesContainer = useRef(null);
   const isMoving = useRef(false);
@@ -18,10 +18,11 @@ const Carousel = ({ images = [], thresholdWidth = 0.5, thresholdTime = 300 }) =>
   const timeInterval = useRef(true);
   const timeIntervalDebounce = useRef();
   const directions = useRef({right: 1, left: -1});
+  const navDotsContainer = useRef(null);
 
   useEffect(() => {
     const firstSlide = slidesContainer.current.children[0];
-    const lastSlide = slidesContainer.current.children[images.length - 1];
+    const lastSlide = slidesContainer.current.children[data.length - 1];
 
     const cloneFirst = firstSlide.cloneNode(true);
     const cloneLast = lastSlide.cloneNode(true);
@@ -35,7 +36,7 @@ const Carousel = ({ images = [], thresholdWidth = 0.5, thresholdTime = 300 }) =>
     slidesContainer.current.addEventListener('touchmove', dragAction); 
     slidesContainer.current.addEventListener('touchend', dragEnd);
        
-    document.querySelector(NAV_DOT_CLASSNAME).classList.add(ACTIVE_DOT_CLASSNAME);
+    navDotsContainer.current.children[0].classList.add(ACTIVE_DOT_CLASSNAME);
   }, []);
 
   const moveSlide = (amountOfSlides, isDragged) => {
@@ -64,6 +65,7 @@ const Carousel = ({ images = [], thresholdWidth = 0.5, thresholdTime = 300 }) =>
       positionOnDragStart.current = event.touches[0].clientX;
     } else {
       positionOnDragStart.current = event.clientX;
+      
       document.onmousemove = dragAction;
       document.onmouseup = dragEnd;
     }
@@ -86,8 +88,12 @@ const Carousel = ({ images = [], thresholdWidth = 0.5, thresholdTime = 300 }) =>
     slidesContainer.current.style.left = (slidesContainer.current.offsetLeft - directionOfDrag.current) + "px";
   }
     
-  const dragEnd = () => {
+  const dragEnd = (event) => {
+
     if (isMoving.current) { return };
+
+    event = event || window.event;
+    event.preventDefault();
 
     finalPosition.current = slidesContainer.current.offsetLeft;
     let quantityOfSkippedSlides = Math.round((initialPosition.current - finalPosition.current) / slideWidth.current);
@@ -112,28 +118,31 @@ const Carousel = ({ images = [], thresholdWidth = 0.5, thresholdTime = 300 }) =>
   }
 
   const transitionEndHandler = () => {
-    if (index.current < 0 || index.current >= images.length) {
+    if (index.current < 0 || index.current >= data.length) {
       isMoving.current = true;
       slidesContainer.current.classList.remove(MOVING_CLASSNAME);
       
       if (index.current < 0) {
-        slidesContainer.current.style.left = -(slideWidth.current * (images.length + 1 - Math.abs(index.current))) + "px";
-        index.current = images.length - Math.abs(index.current);
+        slidesContainer.current.style.left = -(slideWidth.current * (data.length + 1 - Math.abs(index.current))) + "px";
+        index.current = data.length - Math.abs(index.current);
       } else {
-        slidesContainer.current.style.left = -(slideWidth.current * ((Math.abs(index.current)) - images.length + 1)) + "px";
-        index.current = Math.abs(index.current) - images.length;
+        slidesContainer.current.style.left = -(slideWidth.current * ((Math.abs(index.current)) - data.length + 1)) + "px";
+        index.current = Math.abs(index.current) - data.length;
       }
 
       setTimeout(() => slidesContainer.current.classList.add(MOVING_CLASSNAME), 0);
     }
-
-    document.querySelectorAll(NAV_DOT_CLASSNAME).forEach(el => el.classList.remove(ACTIVE_DOT_CLASSNAME));
-    document.getElementById(`${index.current}-dot`).classList.add(ACTIVE_DOT_CLASSNAME);
+    
+    for(let key of navDotsContainer.current.children) {
+      key.classList.remove(ACTIVE_DOT_CLASSNAME)
+    }
+    navDotsContainer.current.children[index.current].classList.add(ACTIVE_DOT_CLASSNAME);
     isMoving.current = false;
   }
 
   const calcAmountOfSlides = (indexOfClickedDot) => {
-    const indexOfActiveDot = Number(document.querySelector(`.${ACTIVE_DOT_CLASSNAME}`).id[0]);
+    const indexOfActiveDot = index.current;
+
     return indexOfClickedDot - indexOfActiveDot;
   }
 
@@ -146,15 +155,15 @@ const Carousel = ({ images = [], thresholdWidth = 0.5, thresholdTime = 300 }) =>
             onTransitionEnd={transitionEndHandler}
             onMouseDown={dragStart}
           >
-            {images.map((img, index) => (
-              <Slide key={index} image={img} />
+            {data.map((el, index) => (
+              <Slide key={index} data={el} />
             ))}
           </div>
         </div>
         <button className="control prevButton" onClick={() => moveSlide(directions.current.left, false)}></button>
         <button className="control nextButton" onClick={() => moveSlide(directions.current.right, false)}></button>
-        <div className="dots">
-          {images.map((el, index) => (
+        <div className="dots" ref={navDotsContainer}>
+          {data.map((el, index) => (
             <span
               className="nav-dot" 
               key={index}

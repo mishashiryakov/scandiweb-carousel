@@ -84,6 +84,7 @@ module.exports = {
     port: 4200,
     open: true,
   },
+  devtool: isDev ? 'source-map' : '',
   plugins: plugins(),
   module: {
     rules: [
@@ -98,8 +99,19 @@ module.exports = {
         ]
       },
       {
-        test: /\.(png|jpg|svg)$/,
+        test: /\.(png|jpg|svg|gif)$/,
         use: ['file-loader']
+      },
+      {
+        test: /\.(mov|mp4)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]'
+            }  
+          }
+        ]
       },
       {
         test: /\.(ttf|woff|woff2|eot)$/,
