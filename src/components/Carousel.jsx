@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import Slide from './Slide';
 
-const NAV_DOT_CLASSNAME = '.nav-dot';
 const ACTIVE_DOT_CLASSNAME = 'active-dot';
 const MOVING_CLASSNAME = 'moving';
 
 const Carousel = ({ data = [], thresholdWidth = 0.5, thresholdTime = 300 }) => {
-
   const slidesContainer = useRef(null);
   const isMoving = useRef(false);
   const index = useRef(0);
@@ -89,7 +87,6 @@ const Carousel = ({ data = [], thresholdWidth = 0.5, thresholdTime = 300 }) => {
   }
     
   const dragEnd = (event) => {
-
     if (isMoving.current) { return };
 
     event = event || window.event;
@@ -142,7 +139,6 @@ const Carousel = ({ data = [], thresholdWidth = 0.5, thresholdTime = 300 }) => {
 
   const calcAmountOfSlides = (indexOfClickedDot) => {
     const indexOfActiveDot = index.current;
-
     return indexOfClickedDot - indexOfActiveDot;
   }
 
@@ -167,7 +163,6 @@ const Carousel = ({ data = [], thresholdWidth = 0.5, thresholdTime = 300 }) => {
             <span
               className="nav-dot" 
               key={index}
-              id={`${index}-dot`}
               onClick={() => moveSlide(calcAmountOfSlides(index), false)}
             >
             </span>
